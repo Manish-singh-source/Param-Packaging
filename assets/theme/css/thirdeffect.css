@@ -1,0 +1,158 @@
+/* @override http://www.parksonspackaging.com/v2/wp-content/themes/parksons/stylesheets/thirdeffect.css?ver=3.5.1 */
+
+/* CSS3 EFFECTS */
+
+/* THIRD EFFECTS */
+
+.third-effect .mask2 {
+   opacity: 0;
+   overflow:visible;
+   border:100px solid rgba(0,0,0,0.7);
+   -moz-box-sizing:border-box;
+   -webkit-box-sizing:border-box;
+   box-sizing:border-box;
+   -webkit-transition: all 0.4s ease-in-out;
+   -moz-transition: all 0.4s ease-in-out;
+   -o-transition: all 0.4s ease-in-out;
+   -ms-transition: all 0.4s ease-in-out;
+   transition: all 0.4s ease-in-out;
+}
+.third-effect a.info2 {
+   position:relative;
+   top:-35px;
+   opacity: 0;
+   -webkit-transition: opacity 0.5s 0s ease-in-out;
+   -moz-transition: opacity 0.5s 0s ease-in-out;
+   -o-transition: opacity 0.5s 0s ease-in-out;
+   -ms-transition: opacity 0.5s 0s ease-in-out;
+   transition: opacity 0.5s 0s ease-in-out;
+}
+.third-effect:hover .mask2 {
+   opacity: 1;
+   border:100px solid rgba(0,0,0,0.7);
+}
+.third-effect:hover a.info2 {
+	opacity:1;
+	-moz-transition-delay: 0.3s;
+	-webkit-transition-delay: 0.3s;
+	-o-transition-delay: 0.3s;
+	-ms-transition-delay: 0.3s;
+	transition-delay: 0.3s;
+}
+
+
+
+/* THIRD EFFECTS */
+
+.third-effect .mask33 {
+   opacity: 0;
+   overflow:visible;
+   border:157px solid rgba(0,0,0,0.7);
+   -moz-box-sizing:border-box;
+   -webkit-box-sizing:border-box;
+   box-sizing:border-box;
+   -webkit-transition: all 0.4s ease-in-out;
+   -moz-transition: all 0.4s ease-in-out;
+   -o-transition: all 0.4s ease-in-out;
+   -ms-transition: all 0.4s ease-in-out;
+   transition: all 0.4s ease-in-out;
+}
+
+.mask33 li {
+   background: rgba(0,0,0,0.7);
+   height:45px;
+}
+.third-effect a.info33 {
+   position:relative;
+  top: 15px;
+left: -15px;
+   opacity: 0;
+   -webkit-transition: opacity 0.5s 0s ease-in-out;
+   -moz-transition: opacity 0.5s 0s ease-in-out;
+   -o-transition: opacity 0.5s 0s ease-in-out;
+   -ms-transition: opacity 0.5s 0s ease-in-out;
+   transition: opacity 0.5s 0s ease-in-out;
+}
+.third-effect:hover .mask33 {
+   opacity: 1;
+   border:157px solid rgba(0,0,0,0.7);
+}
+.third-effect:hover a.info33 {
+	opacity:1;
+	-moz-transition-delay: 0.3s;
+	-webkit-transition-delay: 0.3s;
+	-o-transition-delay: 0.3s;
+	-ms-transition-delay: 0.3s;
+	transition-delay: 0.3s;
+}
+
+.gallery li { list-style:none !important;}
+
+/* @override http://www.parksonspackaging.com/v2/wp-content/themes/parksons/stylesheets/stylehov.css?ver=3.5.1 */
+
+/* CSS3 STYLE GENERIC */
+.view2 {
+   width: 100%;
+   height: 140px;
+   margin: 0px 10px 10px 0px;
+   float: left;
+   overflow: hidden;
+   position: relative;
+   text-align: center;
+   cursor: default;
+}
+.view2 .mask2, .view2 .content {
+   width: 100%;
+   height: 140px;
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+.view2 .mask2 ul{margin:0; padding:0}
+.view2 img {
+   display: block;
+   position: relative;
+}
+.view2 a.info2 {
+   background:url(../img/link.png) center no-repeat;
+   display: inline-block;
+   text-decoration: none;
+   padding:0;
+   text-indent:-9999px;
+   width:20px;
+   height:20px;
+}
+
+
+/* CSS3 STYLE GENERIC */
+.view33 {
+   width: 100%;
+   height: 359px;
+   margin: 0px 10px 10px 0px;
+   float: left;
+   overflow: hidden;
+   position: relative;
+   text-align: center;
+   cursor: default;
+}
+.view33 .mask33, .view33 .content {
+   width: 100%;
+   height: 359px;
+   position: absolute;
+   overflow: hidden;
+   top: 0;
+   left: 0;
+}
+.view33 img {
+   display: block;
+   position: relative;
+}
+.view33 a.info33 {
+   background:url(../images/link.png) center no-repeat;
+   display: inline-block;
+   text-decoration: none;
+   padding:0;
+   text-indent:-9999px;
+   width:20px;
+   height:20px;
+}

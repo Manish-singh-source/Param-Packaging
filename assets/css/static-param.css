@@ -551,21 +551,53 @@ body {
 }
 
 .contactForm button {
-  min-width: 170px;
-  height: 38px;
+  min-width: 180px;
+  min-height: 42px;
   margin: 14px 0 0 0;
-  border: 0;
-  background: #bc0000;
+  padding: 11px 24px;
+  border: 1px solid #a80000;
+  background: linear-gradient(#d40000, #b50000);
   color: #fff;
   font-size: 13px;
   font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: .02em;
   text-transform: uppercase;
-  transition: background .2s ease, transform .2s ease;
+  box-shadow: 0 4px 10px rgba(188, 0, 0, .22);
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease, opacity .2s ease;
 }
 
 .contactForm button:hover {
-  background: #920000;
+  background: linear-gradient(#c00000, #970000);
   transform: translateY(-1px);
+  box-shadow: 0 7px 16px rgba(188, 0, 0, .28);
+}
+
+.contactForm button:disabled,
+.contactForm button.loading {
+  opacity: .78;
+  cursor: wait;
+  transform: none;
+}
+
+.contactForm button.loading span::after {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 8px;
+  border: 2px solid rgba(255, 255, 255, .5);
+  border-top-color: #fff;
+  border-radius: 50%;
+  vertical-align: -2px;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .form-alert {

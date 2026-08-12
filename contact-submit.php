@@ -36,9 +36,9 @@ if ($name === '' || $email === '' || $subject === '' || $message === '' || !filt
     redirectWithStatus('invalid');
 }
 
-$isConfigured = !str_contains($config['host'], 'example.com')
-    && !str_contains($config['username'], 'example.com')
-    && $config['password'] !== 'smtp-password';
+$isConfigured = $config['host'] === 'smtp.gmail.com'
+    && $config['username'] !== 'your-gmail@gmail.com'
+    && $config['password'] !== 'your-gmail-app-password';
 
 if (!$isConfigured) {
     redirectWithStatus('smtp_not_configured');
@@ -91,6 +91,51 @@ HTML;
 
 $plainText = "New Website Inquiry\n\nName: {$name}\nEmail: {$email}\nSubject: {$subject}\nMessage:\n{$message}\n\nSubmitted: {$submittedAt}";
 
+$userHtml = <<<HTML
+<!doctype html>
+<html>
+<body style="margin:0;background:#f2f2f2;font-family:Arial,Helvetica,sans-serif;color:#333;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f2f2f2;padding:28px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="620" cellspacing="0" cellpadding="0" style="width:620px;max-width:96%;background:#fff;border:1px solid #e5e5e5;">
+          <tr>
+            <td style="padding:24px 28px;border-top:5px solid #bc0000;text-align:center;">
+              <img src="cid:param_logo" alt="Param Packaging" style="max-height:68px;width:auto;">
+              <h1 style="margin:18px 0 8px;font-size:25px;line-height:1.2;color:#bc0000;">Thank You, {$safeName}</h1>
+              <p style="margin:0;color:#555;font-size:15px;line-height:1.6;">We have received your inquiry. Our team will review your message and get back to you shortly.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 28px 24px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;font-size:14px;">
+                <tr><td style="padding:12px;border:1px solid #eee;background:#fafafa;font-weight:bold;width:160px;">Subject</td><td style="padding:12px;border:1px solid #eee;">{$safeSubject}</td></tr>
+                <tr><td style="padding:12px;border:1px solid #eee;background:#fafafa;font-weight:bold;vertical-align:top;">Your Message</td><td style="padding:12px;border:1px solid #eee;line-height:1.6;">{$safeMessage}</td></tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:18px 28px;background:#fafafa;border-top:1px solid #eee;font-size:14px;line-height:1.6;">
+              <strong style="color:#bc0000;">Param Packaging Pvt. Ltd</strong><br>
+              C-1002, Lotus Corporate Park, Ram Mandir Road, Goregaon (E), Mumbai - 400 063, India<br>
+              <a href="mailto:info@parampackaging.com" style="color:#bc0000;">info@parampackaging.com</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:14px 28px;background:#202020;color:#fff;text-align:center;font-size:12px;">
+              Param Packaging Pvt Ltd | PineTree Packaging Pvt Ltd
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+HTML;
+
+$userPlainText = "Thank you, {$name}\n\nWe have received your inquiry and our team will get back to you shortly.\n\nSubject: {$subject}\nMessage:\n{$message}\n\nParam Packaging Pvt. Ltd";
+
 try {
     $mail = new PHPMailer(true);
     $mail->isSMTP();
@@ -117,6 +162,29 @@ try {
     $mail->Body = $emailHtml;
     $mail->AltBody = $plainText;
     $mail->send();
+
+    $userMail = new PHPMailer(true);
+    $userMail->isSMTP();
+    $userMail->Host = $config['host'];
+    $userMail->SMTPAuth = true;
+    $userMail->Username = $config['username'];
+    $userMail->Password = $config['password'];
+    $userMail->Port = (int) $config['port'];
+    if (!empty($config['secure'])) {
+        $userMail->SMTPSecure = $config['secure'];
+    }
+
+    $userMail->setFrom($config['from_email'], $config['from_name']);
+    $userMail->addAddress($email, $name);
+    $userMail->addReplyTo($config['admin_email'], $config['admin_name']);
+    if (is_file($logoPath)) {
+        $userMail->addEmbeddedImage($logoPath, 'param_logo', 'logo-param.jpg');
+    }
+    $userMail->isHTML(true);
+    $userMail->Subject = 'Thank you for contacting Param Packaging';
+    $userMail->Body = $userHtml;
+    $userMail->AltBody = $userPlainText;
+    $userMail->send();
 
     redirectWithStatus('success');
 } catch (Exception $e) {

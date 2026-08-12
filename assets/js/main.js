@@ -56,6 +56,17 @@
     });
   }
 
+  document.querySelectorAll(".contactForm form").forEach((form) => {
+    form.addEventListener("submit", () => {
+      const button = form.querySelector(".submit-message-btn");
+      if (!button) return;
+      const label = button.querySelector("span") || button;
+      button.disabled = true;
+      button.classList.add("loading");
+      label.textContent = button.dataset.loadingText || "Sending...";
+    });
+  });
+
   document.querySelectorAll('a[href*="#"]').forEach((link) => {
     link.addEventListener("click", (event) => {
       const url = new URL(link.href, window.location.href);

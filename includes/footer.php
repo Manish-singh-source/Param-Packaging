@@ -7,6 +7,6 @@
   </section>
 
   <a href="#header" class="scrollup"><i class="fa fa-chevron-up"></i></a>
-  <script src="assets/js/main.js?v=10"></script>
+  <script src="assets/js/main.js?v=11"></script>
 </body>
 </html>

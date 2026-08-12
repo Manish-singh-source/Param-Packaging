@@ -154,14 +154,14 @@ include __DIR__ . '/includes/header.php';
               <div class="form-alert <?php echo h($notice[1]); ?>"><?php echo h($notice[0]); ?></div>
             <?php endif; ?>
           <?php endif; ?>
-          <form action="contact-submit.php" method="post">
+          <form action="contact-submit" method="post">
             <h4>Write to Us</h4>
             <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
             <div class="row">
               <div class="col-sm-6"><label>Name</label><input type="text" name="name" placeholder="Enter Name" required><label>Email</label><input type="email" name="email" placeholder="Enter Email" required><label>Subject</label><input type="text" name="subject" placeholder="Enter Subject" required></div>
               <div class="col-sm-6"><label>Message</label><textarea name="message" rows="7" required></textarea></div>
             </div>
-            <button type="submit">Submit Message</button>
+            <button type="submit" class="submit-message-btn" data-loading-text="Sending..."><span>Submit Message</span></button>
           </form>
         </div>
       </div></div>

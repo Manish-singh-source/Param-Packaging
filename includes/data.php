@@ -6,19 +6,19 @@ $slides = [
         'image' => 'assets/theme/img/box_slider.jpg',
         'alt' => 'Innovative packaging carton structures',
         'caption' => 'Innovative Packaging Solutions',
-        'link' => 'index.php#industry',
+        'link' => '/#industry',
     ],
     [
         'image' => 'assets/theme/img/s1-1.jpg',
         'alt' => 'Heidelberg printing technology machinery',
         'caption' => 'We believe in continuous<br>technological advancements',
-        'link' => 'index.php#whoweare',
+        'link' => '/#whoweare',
     ],
     [
         'image' => 'assets/theme/img/qulity-new-1.jpg',
         'alt' => 'Quality color checking process',
         'caption' => 'Quality is not an act,<br>it is a habit',
-        'link' => 'index.php#whatwedo',
+        'link' => '/#whatwedo',
     ],
 ];
 
@@ -27,7 +27,7 @@ $whoPages = [
         'key' => 'about',
         'slug' => 'about-us',
         'title' => 'About Us',
-        'url' => 'about-us.php',
+        'url' => 'about-us',
         'thumb' => 'assets/theme/img/about.jpg',
         'image' => 'assets/theme/img/about-int.jpg',
         'summary' => 'The Print & Pack group based at Mumbai, India, is a leading manufacturer of fine quality printed packaging products, backed by rich and vast experience of more than 30 years.',
@@ -37,7 +37,7 @@ $whoPages = [
         'key' => 'infra',
         'slug' => 'infrastructure',
         'title' => 'Infrastructure',
-        'url' => 'infrastructure.php',
+        'url' => 'infrastructure',
         'thumb' => 'assets/theme/img/infra.jpg',
         'image' => 'assets/theme/img/infra-int.jpg',
         'summary' => 'Technology is power. The network we own backs what helps us produce innovative and responsible packaging of the highest quality.',
@@ -47,7 +47,7 @@ $whoPages = [
         'key' => 'quality',
         'slug' => 'quality',
         'title' => 'Quality',
-        'url' => 'quality.php',
+        'url' => 'quality',
         'thumb' => 'assets/theme/img/quality.jpg',
         'image' => 'assets/theme/img/quality-int.jpg',
         'summary' => 'Quality checks, process discipline and careful finishing help us keep each packaging assignment precise and consistent.',
@@ -57,7 +57,7 @@ $whoPages = [
         'key' => 'business',
         'slug' => 'philosophy',
         'title' => 'Philosophy And Approach',
-        'url' => 'philosophy.php',
+        'url' => 'philosophy',
         'thumb' => 'assets/theme/img/business.jpg',
         'image' => 'assets/theme/img/business-int.jpg',
         'summary' => 'We combine practical planning, efficient production and attentive service to deliver dependable packaging solutions for our customers.',
@@ -67,7 +67,7 @@ $whoPages = [
         'key' => 'awards',
         'slug' => 'awards',
         'title' => 'Awards',
-        'url' => 'awards.php',
+        'url' => 'awards',
         'thumb' => 'assets/theme/img/awards.jpg',
         'image' => 'assets/theme/img/awards-int.jpg',
         'summary' => 'Our work has been recognized across demanding packaging categories, reflecting our commitment to innovation and execution.',
@@ -80,7 +80,7 @@ $whatPages = [
         'key' => 'folding',
         'slug' => 'folding-cartons',
         'title' => 'Folding Cartons',
-        'url' => 'folding-cartons.php',
+        'url' => 'folding-cartons',
         'thumb' => 'assets/theme/img/folding.jpg',
         'image' => 'assets/theme/img/folding-int.jpg',
         'summary' => 'Print and Pack group produces high quality folding cartons from all manufacturing units. Our carton packaging can include value-added finishes.',
@@ -90,7 +90,7 @@ $whatPages = [
         'key' => 'blister',
         'slug' => 'blister-cards',
         'title' => 'Blister Cards',
-        'url' => 'blister-cards.php',
+        'url' => 'blister-cards',
         'thumb' => 'assets/theme/img/blister.jpg',
         'image' => 'assets/theme/img/blister-int.jpg',
         'summary' => 'Blister card packaging is a promising solution when visibility of the product matters. The printed card gives space for branding.',
@@ -100,7 +100,7 @@ $whatPages = [
         'key' => 'corrugated',
         'slug' => 'corrugated-printed-cartons',
         'title' => 'Corrugated Printed Cartons',
-        'url' => 'corrugated-printed-cartons.php',
+        'url' => 'corrugated-printed-cartons',
         'thumb' => 'assets/theme/img/corrugated.jpg',
         'image' => 'assets/theme/img/corrugated-int.jpg',
         'summary' => 'Corrugated packaging gives products strength, structure and dependable transit protection for varied distribution needs.',
@@ -110,7 +110,7 @@ $whatPages = [
         'key' => 'plastic',
         'slug' => 'plastic-cartons',
         'title' => 'Plastic Cartons',
-        'url' => 'plastic-cartons.php',
+        'url' => 'plastic-cartons',
         'thumb' => 'assets/theme/img/carton-01.jpg',
         'image' => 'assets/theme/img/carton-02.jpg',
         'summary' => 'Plastic cartons support clear presentation, durability and structured product protection for selected packaging needs.',
@@ -120,7 +120,7 @@ $whatPages = [
         'key' => 'food',
         'slug' => 'food-packaging',
         'title' => 'Food Packaging',
-        'url' => 'food-packaging.php',
+        'url' => 'food-packaging',
         'thumb' => 'assets/theme/img/carton-01.jpg',
         'image' => 'assets/theme/img/carton-02.jpg',
         'summary' => 'Food packaging solutions are designed for presentation, handling and dependable product communication.',
@@ -187,8 +187,23 @@ function getWordPressPageBySlug($slug) {
 
     mysqli_stmt_bind_param($stmt, 's', $slug);
     mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $page = mysqli_fetch_assoc($result);
+    $page = null;
+
+    if (function_exists('mysqli_stmt_get_result')) {
+        $result = mysqli_stmt_get_result($stmt);
+        $page = $result ? mysqli_fetch_assoc($result) : null;
+    } else {
+        mysqli_stmt_bind_result($stmt, $id, $title, $content, $attachedFile);
+        if (mysqli_stmt_fetch($stmt)) {
+            $page = [
+                'ID' => $id,
+                'post_title' => $title,
+                'post_content' => $content,
+                'attached_file' => $attachedFile,
+            ];
+        }
+    }
+
     mysqli_stmt_close($stmt);
     mysqli_close($mysqli);
 
